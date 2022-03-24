@@ -1,0 +1,6 @@
+libignition-cmake2-dev
+libignition-msgs9-dev
+libignition-transport12-dev
+libprotobuf-dev
+libprotoc-dev
+protobuf-compiler
