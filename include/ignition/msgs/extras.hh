@@ -22,7 +22,7 @@
 #include <ignition/msgs/topic_info.pb.h>
 #include <ignition/msgs/wrench.pb.h>
 
-namespace ignition
+namespace gz
 {
   namespace msgs
   {

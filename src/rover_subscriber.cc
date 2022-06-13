@@ -17,22 +17,22 @@
 
 #include <iostream>
 #include <string>
-#include <ignition/msgs.hh>
-#include <ignition/transport.hh>
+#include <gz/msgs.hh>
+#include <gz/transport.hh>
 
-void pose_cb(const ignition::msgs::Pose &_msg)
+void pose_cb(const gz::msgs::Pose &_msg)
 {
   std::cout << _msg.DebugString();
 }
 
-void twist_cb(const ignition::msgs::Twist &_msg)
+void twist_cb(const gz::msgs::Twist &_msg)
 {
   std::cout << _msg.DebugString();
 }
 
 int main(int argc, char **argv)
 {
-  ignition::transport::Node node;
+  gz::transport::Node node;
 
   // subscribe to pose
   std::string pose_topic = "/pose";
@@ -53,6 +53,6 @@ int main(int argc, char **argv)
   }
 
   // spin.
-  ignition::transport::waitForShutdown();
+  gz::transport::waitForShutdown();
   return 0;
 }

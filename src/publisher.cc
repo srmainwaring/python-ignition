@@ -21,8 +21,8 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include <ignition/msgs.hh>
-#include <ignition/transport.hh>
+#include <gz/msgs.hh>
+#include <gz/transport.hh>
 
 static std::atomic<bool> g_terminatePub(false);
 
@@ -39,9 +39,9 @@ int main(int argc, char **argv)
   std::signal(SIGTERM, signal_handler);
   
   // Create a transport node and advertise a topic.
-  ignition::transport::Node node;
+  gz::transport::Node node;
   std::string topic = "/foo";
-  auto pub = node.Advertise<ignition::msgs::StringMsg>(topic);
+  auto pub = node.Advertise<gz::msgs::StringMsg>(topic);
   if (!pub)
   {
     std::cerr << "Error advertising topic [" << topic << "]" << std::endl;
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   }
   
   // Prepare the message.
-  ignition::msgs::StringMsg msg;
+  gz::msgs::StringMsg msg;
   msg.set_data("hello");
 
   // Publish messages at 1Hz.

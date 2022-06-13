@@ -21,9 +21,9 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include <ignition/math/Quaternion.hh>
-#include <ignition/msgs.hh>
-#include <ignition/transport.hh>
+#include <gz/math/Quaternion.hh>
+#include <gz/msgs.hh>
+#include <gz/transport.hh>
 
 static std::atomic<bool> g_terminatePub(false);
 
@@ -40,10 +40,10 @@ int main(int argc, char **argv)
   std::signal(SIGTERM, signal_handler);
   
   // Create a transport node and advertise a topic.
-  ignition::transport::Node node;
+  gz::transport::Node node;
 
   std::string pose_topic = "/pose";
-  auto pose_pub = node.Advertise<ignition::msgs::Pose>(pose_topic);
+  auto pose_pub = node.Advertise<gz::msgs::Pose>(pose_topic);
   if (!pose_pub)
   {
     std::cerr << "Error advertising topic [" << pose_topic << "]\n";
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
   }
 
   std::string twist_topic = "/twist";
-  auto twist_pub = node.Advertise<ignition::msgs::Twist>(twist_topic);
+  auto twist_pub = node.Advertise<gz::msgs::Twist>(twist_topic);
   if (!twist_pub)
   {
     std::cerr << "Error advertising topic [" << twist_topic << "]\n";
@@ -84,45 +84,45 @@ int main(int argc, char **argv)
     double y = radius * s;
     double vx = -1.0 * radius * wz * s;
     double vy = radius * wz * c;
-    ignition::math::Quaternion quat(0.0, 0.0, theta);
+    gz::math::Quaternion quat(0.0, 0.0, theta);
 
     // Prepare the message.
-    ignition::msgs::Time time;
+    gz::msgs::Time time;
     time.set_sec(time_s);
     time.set_nsec(time_ns);
 
-    ignition::msgs::Header header;
+    gz::msgs::Header header;
     *header.mutable_stamp() = time;
 
-    ignition::msgs::Vector3d position;
+    gz::msgs::Vector3d position;
     position.set_x(x);
     position.set_y(y);
     position.set_z(0.0);
 
-    ignition::msgs::Quaternion orientation;
+    gz::msgs::Quaternion orientation;
     orientation.set_x(quat.X());
     orientation.set_y(quat.Y());
     orientation.set_z(quat.Z());
     orientation.set_w(quat.W());
 
-    ignition::msgs::Pose pose;
+    gz::msgs::Pose pose;
     pose.set_name("base_link");
     pose.set_id(id);
     *pose.mutable_header() = header;
     *pose.mutable_position() = position;
     *pose.mutable_orientation() = orientation;
 
-    ignition::msgs::Vector3d lin_vel_msg;
+    gz::msgs::Vector3d lin_vel_msg;
     lin_vel_msg.set_x(vx);
     lin_vel_msg.set_y(vy);
     lin_vel_msg.set_z(0.0);
 
-    ignition::msgs::Vector3d ang_vel_msg;
+    gz::msgs::Vector3d ang_vel_msg;
     ang_vel_msg.set_x(0.0);
     ang_vel_msg.set_y(0.0);
     ang_vel_msg.set_z(wz);
 
-    ignition::msgs::Twist twist;
+    gz::msgs::Twist twist;
     *twist.mutable_header() = header;
     *twist.mutable_linear() = lin_vel_msg;
     *twist.mutable_angular() = ang_vel_msg;

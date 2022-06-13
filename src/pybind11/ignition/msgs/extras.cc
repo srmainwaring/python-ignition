@@ -17,7 +17,7 @@
 
 #include "ignition/msgs/extras.hh"
 
-namespace ignition
+namespace gz
 {
   namespace msgs
   {

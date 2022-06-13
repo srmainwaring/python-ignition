@@ -17,19 +17,19 @@
 
 #include <iostream>
 
-#include <ignition/msgs.hh>
+#include <gz/msgs.hh>
 
-using namespace ignition;
+using namespace gz;
 
 int main(int argc, const char *argv[])
 {
-  // https://ignitionrobotics.org/api/msgs/8.1/cppgetstarted.html
+  // https://gazebosim.org/api/msgs/8.1/cppgetstarted.html
   {
-    ignition::msgs::Vector3d point1;
+    gz::msgs::Vector3d point1;
     point1.set_x(1);
     point1.set_y(3);
     point1.set_z(5);
-    ignition::msgs::Vector3d point2;
+    gz::msgs::Vector3d point2;
     point2.set_x(2);
     point2.set_y(4);
     point2.set_z(6);

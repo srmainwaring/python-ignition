@@ -15,8 +15,8 @@
  *
 */
 
-#include <ignition/msgs.hh>
-#include <ignition/transport.hh>
+#include <gz/msgs.hh>
+#include <gz/transport.hh>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -30,16 +30,16 @@
 
 namespace py = pybind11;
 
-namespace ignition
+namespace gz
 {
 namespace transport
 {
 namespace python
 {
-/// \brief Define pybind11 bindings for ignition::transport objects
+/// \brief Define pybind11 bindings for gz::transport objects
 void define_transport_node(py::module_ module)
 {
-  using namespace ignition;
+  using namespace gz;
   using namespace transport;
 
   pybind11_protobuf::ImportNativeProtoCasters();
@@ -130,7 +130,7 @@ void define_transport_node(py::module_ module)
       .def("discovery", [](
           Publisher &_pub)
           {
-            ignition::msgs::Discovery msg;
+            gz::msgs::Discovery msg;
             _pub.FillDiscovery(msg);
             return msg;
           },
@@ -159,7 +159,7 @@ void define_transport_node(py::module_ module)
       .def("discovery", [](
           MessagePublisher &_pub)
           {
-            ignition::msgs::Discovery msg;
+            gz::msgs::Discovery msg;
             _pub.FillDiscovery(msg);
             return msg;
           },
@@ -191,7 +191,7 @@ void define_transport_node(py::module_ module)
       .def("discovery", [](
           ServicePublisher &_pub)
           {
-            ignition::msgs::Discovery msg;
+            gz::msgs::Discovery msg;
             _pub.FillDiscovery(msg);
             return msg;
           },
@@ -264,7 +264,7 @@ void define_transport_node(py::module_ module)
           const std::string &_repType)
           {
             // see ign-transport/src/cmd/ign.cc L227-240
-            auto rep = ignition::msgs::Factory::New(_repType);
+            auto rep = gz::msgs::Factory::New(_repType);
             if (!rep)
             {
               std::cerr << "Unable to create response of type[" << _repType << "].\n";
@@ -302,21 +302,21 @@ void define_transport_node(py::module_ module)
       ;
 
   // register Node::Publisher as a subclass of Node
-  py::class_<ignition::transport::Node::Publisher>(node, "Publisher",
+  py::class_<gz::transport::Node::Publisher>(node, "Publisher",
       "A class that is used to store information about an"
       " advertised publisher.")
       .def(py::init<>())
-      .def("valid", &ignition::transport::Node::Publisher::Valid,
+      .def("valid", &gz::transport::Node::Publisher::Valid,
           "Return true if valid information, such as a non-empty"
           " topic name, is present.")
-      .def("publish", &ignition::transport::Node::Publisher::Publish,
+      .def("publish", &gz::transport::Node::Publisher::Publish,
           pybind11::arg("msg"),
           "Publish a message")
       .def("throttled_update_ready",
-          &ignition::transport::Node::Publisher::ThrottledUpdateReady,
+          &gz::transport::Node::Publisher::ThrottledUpdateReady,
           "")
       .def("has_connections",
-          &ignition::transport::Node::Publisher::HasConnections,
+          &gz::transport::Node::Publisher::HasConnections,
           "Return true if this publisher has subscribers")
       ;
 }
@@ -324,16 +324,16 @@ void define_transport_node(py::module_ module)
 }
 }
 
-/// \brief Define the ignition_transport module
+/// \brief Define the gz_transport module
 PYBIND11_MODULE(transport, m) {
   pybind11_protobuf::ImportNativeProtoCasters();
 
-  m.doc() = "Ignition Transport Python Library.";
+  m.doc() = "gz Transport Python Library.";
 
-  ignition::transport::python::define_transport_node(m);
+  gz::transport::python::define_transport_node(m);
 
   m.def("version", []() -> std::string {
-    return IGNITION_TRANSPORT_VERSION_FULL;
+    return GZ_TRANSPORT_VERSION_FULL;
   });
 
 }

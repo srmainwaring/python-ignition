@@ -25,7 +25,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(extras, m)
 {
-  using namespace ignition;
+  using namespace gz;
   using namespace msgs;
   using namespace extras;
 

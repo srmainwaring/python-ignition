@@ -20,8 +20,8 @@
 #include <iostream>
 #include <string>
 
-#include <ignition/msgs.hh>
-#include <ignition/transport.hh>
+#include <gz/msgs.hh>
+#include <gz/transport.hh>
 
 void cb(const google::protobuf::Message &_msg)
 {
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
   }
 
   // create node
-  ignition::transport::Node node;
+  gz::transport::Node node;
 
   // subscribe to a topic by registering a callback.
   if (!node.Subscribe(topic, cb))
@@ -67,6 +67,6 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  ignition::transport::waitForShutdown();
+  gz::transport::waitForShutdown();
   return 0;
 }

@@ -17,17 +17,17 @@
 
 #include <iostream>
 #include <string>
-#include <ignition/msgs.hh>
-#include <ignition/transport.hh>
+#include <gz/msgs.hh>
+#include <gz/transport.hh>
 
-void cb(const ignition::msgs::StringMsg &_msg)
+void cb(const gz::msgs::StringMsg &_msg)
 {
   std::cout << "Msg: " << _msg.data() << std::endl;
 }
 
 int main(int argc, char **argv)
 {
-  ignition::transport::Node node;
+  gz::transport::Node node;
   std::string topic = "/foo";
 
   // Subscribe to a topic by registering a callback.
@@ -38,6 +38,6 @@ int main(int argc, char **argv)
   }
 
   // Zzzzzz.
-  ignition::transport::waitForShutdown();
+  gz::transport::waitForShutdown();
   return 0;
 }
