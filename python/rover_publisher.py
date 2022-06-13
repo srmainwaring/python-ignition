@@ -18,15 +18,15 @@ from scipy.spatial.transform import Rotation as Rotation
 import math
 import time
 
-from ignition.msgs.header_pb2 import Header
-from ignition.msgs.pose_pb2 import Pose
-from ignition.msgs.quaternion_pb2 import Quaternion
-from ignition.msgs.time_pb2 import Time
-from ignition.msgs.twist_pb2 import Twist
-from ignition.msgs.vector3d_pb2 import Vector3d
+from gz.msgs.header_pb2 import Header
+from gz.msgs.pose_pb2 import Pose
+from gz.msgs.quaternion_pb2 import Quaternion
+from gz.msgs.time_pb2 import Time
+from gz.msgs.twist_pb2 import Twist
+from gz.msgs.vector3d_pb2 import Vector3d
 
-from ignition.transport import AdvertiseMessageOptions
-from ignition.transport import Node
+from gz.transport import AdvertiseMessageOptions
+from gz.transport import Node
 
 def main():
     # Create a transport node and advertise a topic

@@ -17,19 +17,19 @@
 '''
 Replicate the ign_tools command:
 
-$ ign topic -l
+$ ign service -l
 '''
 
-from ignition.transport import Node
+from gz.transport import Node
 
 def main():
     # create a transport node
     node = Node()
 
-    # get list of topics
-    topic_list = node.topic_list()
-    for topic in topic_list:
-        print(topic)
+    # get list of services
+    service_list = node.service_list()
+    for service in service_list:
+        print(service)
 
 if __name__ == "__main__":
     main()

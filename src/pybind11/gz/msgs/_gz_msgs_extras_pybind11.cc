@@ -15,7 +15,7 @@
  *
 */
 
-#include "ignition/msgs/extras.hh"
+#include "gz/msgs/extras.hh"
 
 #include <pybind11/pybind11.h>
 

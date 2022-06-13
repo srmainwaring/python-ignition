@@ -15,12 +15,7 @@
  *
 */
 
-#ifndef PYTHON_IGNITION_MSGS_HH
-#define PYTHON_IGNITION_MSGS_HH
-
-#include <ignition/msgs/time.pb.h>
-#include <ignition/msgs/topic_info.pb.h>
-#include <ignition/msgs/wrench.pb.h>
+#include "gz/msgs/extras.hh"
 
 namespace gz
 {
@@ -28,16 +23,28 @@ namespace gz
   {
     namespace extras
     {
+      Time MakeTime()
+      {
+        Time msg;
+        msg.set_sec(10);
+        msg.set_nsec(20);
+        return msg;
+      }
 
-      Time MakeTime();
+      void TakeTime(const Time& msg)
+      {
+        std::cout << msg.DebugString();
+      }
 
-      void TakeTime(const Time& msg);
+      void TakeTopicInfo(const TopicInfo& msg)
+      {
+        std::cout << msg.DebugString();
+      }
 
-      void TakeTopicInfo(const TopicInfo& msg);
-
-      void TakeWrench(const Wrench& msg);
+      void TakeWrench(const Wrench& msg)
+      {
+        std::cout << msg.DebugString();
+      }
     }
   }
 }
-
-#endif

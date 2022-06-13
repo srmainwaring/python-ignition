@@ -14,25 +14,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ignition.msgs.header_pb2 import Header
-from ignition.msgs.double_pb2 import Double
-from ignition.msgs.double_v_pb2 import Double_V
-from ignition.msgs.float_pb2 import Float
-from ignition.msgs.float_v_pb2 import Float_V
-from ignition.msgs.cmd_vel2d_pb2 import CmdVel2D
-from ignition.msgs.pid_pb2 import PID
-from ignition.msgs.pose_pb2 import Pose
-from ignition.msgs.pose_v_pb2 import Pose_V
-from ignition.msgs.quaternion_pb2 import Quaternion
-from ignition.msgs.time_pb2 import Time
-from ignition.msgs.twist_pb2 import Twist
-from ignition.msgs.vector3d_pb2 import Vector3d
-from ignition.msgs.wrench_pb2 import Wrench
+from gz.msgs.header_pb2 import Header
+from gz.msgs.double_pb2 import Double
+from gz.msgs.double_v_pb2 import Double_V
+from gz.msgs.float_pb2 import Float
+from gz.msgs.float_v_pb2 import Float_V
+from gz.msgs.cmd_vel2d_pb2 import CmdVel2D
+from gz.msgs.pid_pb2 import PID
+from gz.msgs.pose_pb2 import Pose
+from gz.msgs.pose_v_pb2 import Pose_V
+from gz.msgs.quaternion_pb2 import Quaternion
+from gz.msgs.time_pb2 import Time
+from gz.msgs.twist_pb2 import Twist
+from gz.msgs.vector3d_pb2 import Vector3d
+from gz.msgs.wrench_pb2 import Wrench
 
-from ignition.msgs.publish_pb2 import Publish
-from ignition.msgs.publishers_pb2 import Publishers
-from ignition.msgs.subscribe_pb2 import Subscribe
-from ignition.msgs.topic_info_pb2 import TopicInfo
+from gz.msgs.publish_pb2 import Publish
+from gz.msgs.publishers_pb2 import Publishers
+from gz.msgs.subscribe_pb2 import Subscribe
+from gz.msgs.topic_info_pb2 import TopicInfo
 
 from google.protobuf.internal import api_implementation
 
@@ -186,7 +186,7 @@ def main():
     pub_msg = Publish()
     pub_msg.header.CopyFrom(header_msg)
     pub_msg.topic = "/force_torque"
-    pub_msg.msg_type = "ignition.msgs.Wrench"
+    pub_msg.msg_type = "gz.msgs.Wrench"
     pub_msg.host = "127.0.0.1"
     pub_msg.port = 11311
     print(type(pub_msg))
@@ -196,7 +196,7 @@ def main():
     sub_msg = Subscribe()
     sub_msg.header.CopyFrom(header_msg)
     sub_msg.topic = "/force_torque"
-    sub_msg.msg_type = "ignition.msgs.Wrench"
+    sub_msg.msg_type = "gz.msgs.Wrench"
     sub_msg.host = "127.0.0.1"
     sub_msg.port = 11311
     sub_msg.latching = True
@@ -206,7 +206,7 @@ def main():
     print("----------------------------------------")
     topic_msg = TopicInfo()
     topic_msg.header.CopyFrom(header_msg)
-    topic_msg.msg_type = "ignition.msgs.Wrench"
+    topic_msg.msg_type = "gz.msgs.Wrench"
     topic_msg.publisher.append(pub_msg)
     topic_msg.subscriber.append(sub_msg)
     print(type(topic_msg))

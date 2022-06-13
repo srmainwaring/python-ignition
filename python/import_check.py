@@ -17,18 +17,18 @@
 import sys
 import time
 
-from ignition.msgs.any_pb2 import Any
-from ignition.msgs.header_pb2 import Header
-from ignition.msgs.stringmsg_pb2 import StringMsg
-from ignition.msgs.time_pb2 import Time
+from gz.msgs.any_pb2 import Any
+from gz.msgs.header_pb2 import Header
+from gz.msgs.stringmsg_pb2 import StringMsg
+from gz.msgs.time_pb2 import Time
 
-from ignition.msgs.extras import make_time
-from ignition.msgs.extras import take_time
-from ignition.msgs.extras import take_topic_info
-from ignition.msgs.extras import take_wrench
+from gz.msgs.extras import make_time
+from gz.msgs.extras import take_time
+from gz.msgs.extras import take_topic_info
+from gz.msgs.extras import take_wrench
 
-from ignition.transport import AdvertiseMessageOptions
-from ignition.transport import Node
+from gz.transport import AdvertiseMessageOptions
+from gz.transport import Node
 
 
 def main():

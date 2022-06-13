@@ -1,21 +1,22 @@
-# Python Ignition
+# Gazebo Python
 
-This project provides Python bindings for [`ignition-msgs`](https://github.com/ignitionrobotics/ign-msgs) and [`ignition-transport`](https://github.com/ignitionrobotics/ign-transport).
+This project provides Python bindings for [`gz-msgs`](https://github.com/gazebosim/gz-msgs) and [`gz-transport`](https://github.com/gazebosim/gz-transport).
 
 ## Building with CMake
 
-### Install Ignition
+### Install Gazebo
 
-Follow the installation instructions for [Ignition Garden](https://ignitionrobotics.org/docs/garden).
-This project depends directly on [`ignition-msgs`](https://github.com/ignitionrobotics/ign-msgs) and [`ignition-transport`](https://github.com/ignitionrobotics/ign-transport). These may be either available as system installs or in a source install in a local workspace folder which we assume is `~/workspace`.
+Follow the installation instructions for
+[Gazebo Garden](https://gazebosim.org/docs/garden).
+This project depends directly on [`gz-msgs`](https://github.com/gazebosim/gz-msgs) and [`gz-transport`](https://github.com/gazebosim/gz-transport). These may be either available as system installs or in a source install in a local workspace folder which we assume is `~/workspace`.
 
-### Install `python-ignition`
+### Install `gz-python`
 
 Clone this repo into the workspace source directory and update external submodules:
 
 ```bash
 cd ~/workspace/src
-git clone --recurse-submodules https://github.com/srmainwaring/python-ignition.git
+git clone --recurse-submodules https://github.com/srmainwaring/python-ignition.git gz-python
 ```
 
 ### Build with CMake
@@ -26,17 +27,17 @@ Currently our use of [`pybind11_protobuf`](https://github.com/pybind/pybind11_pr
 export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 ```
 
-Set the environment variable determing the Ignition version. This should be one of `edifice`, `fortress` or `garden`. The default is `garden`:
+Set the environment variable determing the Gazebo version. This should be one of `edifice`, `fortress` or `garden`. The default is `garden`:
 
 ```bash
-export IGNITION_VERSION=garden
+export GZ_VERSION=garden
 ```
 
 Then create a build directory, configure and make:
 
 ```bash
-mkdir -p ~/workspace/src/python-ignition/build
-cd ~/workspace/src/python-ignition/build
+mkdir -p ~/workspace/src/gz-python/build
+cd ~/workspace/src/gz-python/build
 cmake ..
 make
 ```
@@ -47,20 +48,20 @@ Update the PYTHONPATH to include the location of the extension modules and the
 generated Python protobuf bindings.
 
 ```bash
-cd ~/workspace/src/python-ignition
+cd ~/workspace/src/gz-python
 export PYTHONPATH=${PYTHONPATH}:$(pwd)/build/python
 ```
 
 ## Usage
 
-### `ign-msg` bindings 
+### `gz-msg` bindings 
 
-The Python bindings for `ign-msgs` are the standard generated protobuf code
-for Python. For example `ign-msgs/proto/ignition/msgs/time.proto` may be used as follows: 
+The Python bindings for `gz-msgs` are the standard generated protobuf code
+for Python. For example `gz-msgs/proto/gz/msgs/time.proto` may be used as follows: 
 
 ```python
 # example.py
-from ignition.msgs.time_pb2 import Time
+from gz.msgs.time_pb2 import Time
 
 msg = Time()
 msg.sec = 15
@@ -68,19 +69,19 @@ msg.nsec = 21
 print(msg)
 ```
 
-### `ign-transport` bindings 
+### `gz-transport` bindings 
 
-The Python bindings for `ign-transport` are contained in a module called `transport`.
+The Python bindings for `gz-transport` are contained in a module called `transport`.
 The object naming and usage for the most part follows the C++ interface,
-so the C++ Ignition Tutorials are a good guide on how to use the library.
+so the C++ Gazebo Tutorials are a good guide on how to use the library.
 
 Publish:
 
 ```python
-from ignition.msgs.stringmsg_pb2 import StringMsg
+from gz.msgs.stringmsg_pb2 import StringMsg
 
-from ignition.transport import AdvertiseMessageOptions
-from ignition.transport import Node
+from gz.transport import AdvertiseMessageOptions
+from gz.transport import Node
 
 # Create a transport node
 node = Node()
@@ -103,10 +104,10 @@ Subscribe:
 import time
 import typing
 
-from ignition.msgs.stringmsg_pb2 import StringMsg
+from gz.msgs.stringmsg_pb2 import StringMsg
 
-from ignition.transport import SubscribeOptions
-from ignition.transport import Node
+from gz.transport import SubscribeOptions
+from gz.transport import Node
 
 def cb(msg: StringMsg) -> None:
     print("Msg: [{}] from Python".format(msg.data))
@@ -125,11 +126,11 @@ node.subscribe(topic, cb, msg_type_name, sub_options)
 ## Examples
 
 A number of examples in C++ and Python are provided. In the following we suppose that
-they are being run from the project directory `~/workspace/src/python-ignition`.
+they are being run from the project directory `~/workspace/src/gz-python`.
 
 ---
 
-`src/msg_example.cc` is a copy of the [`ign-msgs` tutorial example](https://ignitionrobotics.org/api/msgs/8.1/cppgetstarted.html):
+`src/msg_example.cc` is a copy of the [`gz-msgs` tutorial example](https://gazebosim.org/api/msgs/8.1/cppgetstarted.html):
 
 ```bash
 $ ./build/msg_example
@@ -146,7 +147,7 @@ z: 6
 
 ---
 
-`src/publisher.cc` and `src/subscriber.cc` is copied from the [`ign-transport` messages tutorial example](https://ignitionrobotics.org/api/transport/11.0/messages.html).
+`src/publisher.cc` and `src/subscriber.cc` is copied from the [`gz-transport` messages tutorial example](https://gazebosim.org/api/transport/11.0/messages.html).
 
 From terminal 1:
 
@@ -218,15 +219,15 @@ angular {
 
 ---
 
-`python/msgs_example.py` is a Python example that uses the generated Python protobuf libraries for `ign-msgs`:
+`python/msgs_example.py` is a Python example that uses the generated Python protobuf libraries for `gz-msgs`:
 
 ```bash
 $ ./python/msgs_example.py
-Ignition Protobuf Example
+Gazebo Protobuf Example
 
 proto api type: python
 ----------------------------------------
-<class 'ignition.msgs.time_pb2.Time'>
+<class 'gz.msgs.time_pb2.Time'>
 sec: 15
 nsec: 21
 ...
@@ -241,7 +242,7 @@ From terminal 1:
 
 ```bash
 $ ./python/publisher.py 
-Advertising ignition.msgs.StringMsg on topic [/foo]
+Advertising gz.msgs.StringMsg on topic [/foo]
 Publishing hello on topic [/foo]
 Publishing hello on topic [/foo]
 ...
@@ -251,7 +252,7 @@ From terminal 2:
 
 ```bash
 $ ./python/subscriber.py 
-Subscribing to type ignition.msgs.StringMsg on topic [/foo]
+Subscribing to type gz.msgs.StringMsg on topic [/foo]
 Msg: [hello] from Python
 Msg: [hello] from Python
 ...
@@ -265,8 +266,8 @@ From terminal 1:
 
 ```bash
 ./python/rover_publisher.py
-Advertising ignition.msgs.Pose on topic [/pose]
-Advertising ignition.msgs.Twist on topic [/twist]
+Advertising gz.msgs.Pose on topic [/pose]
+Advertising gz.msgs.Twist on topic [/twist]
 Publishing pose on topic [/pose], twist on topic [/twist]
 Publishing pose on topic [/pose], twist on topic [/twist]
 ...
@@ -276,8 +277,8 @@ From terminal 2:
 
 ```bash
 ./python/rover_subscriber.py
-Subscribing to type ignition.msgs.Pose on topic [/pose]
-Subscribing to type ignition.msgs.Twist on topic [/twist]
+Subscribing to type gz.msgs.Pose on topic [/pose]
+Subscribing to type gz.msgs.Twist on topic [/twist]
 header {
   stamp {
     sec: 2
@@ -313,29 +314,29 @@ angular {
 
 --- 
 
-`python/ign_topic_list.py` is a Python version of the command `ign topic -l`
+`python/gz_topic_list.py` is a Python version of the command `ign topic -l`
 
 ```bash
-$ ./python/ign_topic_list.py 
+$ ./python/gz_topic_list.py 
 /foo
 ```
 
 --- 
 
-`python/ign_topic_info.py` is a Python version of the command `ign topic -i -t /foo`
+`python/gz_topic_info.py` is a Python version of the command `ign topic -i -t /foo`
 
 ```bash
-$ ./python/ign_topic_info.py -t /foo
+$ ./python/gz_topic_info.py -t /foo
 Publishers [Address, Message Type]:
-  tcp://127.0.0.1:60328, ignition.msgs.StringMsg
+  tcp://127.0.0.1:60328, gz.msgs.StringMsg
 ```
 
 --- 
 
-`python/ign_topic_echo.py` is a Python version of the command `ign topic -e -t /foo`
+`python/gz_topic_echo.py` is a Python version of the command `ign topic -e -t /foo`
 
 ```bash
-$ ./python/ign_topic_echo.py -t /foo
+$ ./python/gz_topic_echo.py -t /foo
 Subscribing to topic [/foo]
 data: "hello"
 
@@ -346,10 +347,10 @@ data: "hello"
 
 --- 
 
-`python/ign_service_list.py` is a Python version of the command `ign service -l`
+`python/gz_service_list.py` is a Python version of the command `ign service -l`
 
 ```bash
-$ ./python/ign_service_list.py 
+$ ./python/gz_service_list.py 
 /gazebo/resource_paths/add
 /gazebo/resource_paths/get
 /gazebo/worlds
@@ -360,19 +361,19 @@ $ ./python/ign_service_list.py
 
 --- 
 
-`python/ign_service_info.py` is a Python version of the command `ign service -i -s /gazebo/worlds`
+`python/gz_service_info.py` is a Python version of the command `ign service -i -s /gazebo/worlds`
 
 ```bash
-$ ./python/ign_service_info.py -s /gazebo/worlds
+$ ./python/gz_service_info.py -s /gazebo/worlds
 Service providers [Address, Request Message Type, Response Message Type]:
-  tcp://127.0.0.1:63657, ignition.msgs.Empty, ignition.msgs.StringMsg_V
+  tcp://127.0.0.1:63657, gz.msgs.Empty, gz.msgs.StringMsg_V
 ```
 
 
 ## Building with Bazel
 
 On macOS the project may also be built with Bazel. This is experimental and depends upon
-a modified version of the Bazel build rules for Ignition in the [`ign-bazel`](https://github.com/ignitionrobotics/ign-bazel) project.
+a modified version of the Bazel build rules for Gazebo in the [`gz-bazel`](https://github.com/gazebosim/gz-bazel) project.
 
 
 ### Installing Bazel
@@ -393,14 +394,14 @@ brew install protobuf
 
 ### Setting up the workspace
 
-Make a directory to contain this package and all the Ignition packages and dependencies:
+Make a directory to contain this package and all the Gazebo packages and dependencies:
 
 ```bash
-mkdir ~/ignition/
-cd ~/ignition/
+mkdir ~/gz/
+cd ~/gz/
 ```
 
-Clone each of the packages using the `bazel.repos` file and [vcstool](https://github.com/dirk-thomas/vcstool). The forked version of [`ign-bazel`](https://github.com/srmainwaring/ign-bazel/tree/bazel-macos) contains modified build rules and repo references for macOS.
+Clone each of the packages using the `bazel.repos` file and [vcstool](https://github.com/dirk-thomas/vcstool). The forked version of [`gz-bazel`](https://github.com/srmainwaring/ign-bazel/tree/bazel-macos) contains modified build rules and repo references for macOS.
 
 ```bash
 wget https://raw.githubusercontent.com/srmainwaring/ign-bazel/bazel-macos/example/bazel.repos
@@ -410,19 +411,19 @@ vcs import . < bazel.repos
 Next, symlink the following files into the workspace directory:
 
 ```bash
-cd ~/ignition
+cd ~/gz
 ln -sf ./ign_bazel/example/WORKSPACE.example ./WORKSPACE
 ln -sf ./ign_bazel/example/BUILD.example ./BUILD.bazel
 ln -sf ./ign_bazel/example/bazelrc.example ./.bazelrc
-ln -sf ./python_ignition/ign-msgs9.BUILD ./ign-msgs9.BUILD
+ln -sf ./gz-python/ign-msgs9.BUILD ./ign-msgs9.BUILD
 ```
 
-Finally, [`pybind11_protobuf`](https://github.com/pybind/pybind11_protobuf) requires a patch to the protobuf archive which must be available in the subdirectory `~/ignition/external`. It must be copied rather than symlinked:
+Finally, [`pybind11_protobuf`](https://github.com/pybind/pybind11_protobuf) requires a patch to the protobuf archive which must be available in the subdirectory `~/gz/external`. It must be copied rather than symlinked:
 
 ```bash
-cd ~/ignition
+cd ~/gz
 mkdir external
-cp ./python_ignition/external/com_google_protobuf_build.patch external
+cp ./gz-python/external/com_google_protobuf_build.patch external
 ```
 
 ### Build with Bazel
@@ -436,11 +437,11 @@ export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 Then build the examples with:
 
 ```bash
-bazel build //python_ignition:all
-bazel build //python_ignition/python:all
+bazel build //gz-python:all
+bazel build //gz-python/python:all
 ```
 
-Note: on macOS not all Ignition projects will build with Bazel, so the command:
+Note: on macOS not all Gazebo projects will build with Bazel, so the command:
 
 ```bash
 bazel build //... 
@@ -451,7 +452,7 @@ will result in a number of errors.
 ### Usage in Bazel builds
 
 The Bazel build file `ign-msgs9.BUILD` defines targets for a selection of messages.
-For example the targets for `proto/ignition/msgs/time.proto` are:
+For example the targets for `proto/gz/msgs/time.proto` are:
 
 ```bash
 # proto_library
@@ -519,27 +520,27 @@ export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 ```
 
 
-### Repos used to build Ignition on macOS with Bazel
+### Repos used to build Gazbo on macOS with Bazel
 
-The table summarises the dependencies (repo and branch) on the Ignition libraries.
+The table summarises the dependencies (repo and branch) on the Gazebo libraries.
 
 | library | repo | branch | build | test |
 | --- | --- | --- | --- | --- |
 | | | | | |
-|python_ignition|https://github.com/srmainwaring/python-ignition|main|pass|-|
+|gz-python|https://github.com/srmainwaring/gz-python|main|pass|-|
 | | | | | |
-|ign-bazel|https://github.com/srmainwaring/ign-bazel|bazel-macos|pass|pass|
-|ign-math|https://github.com/srmainwaring/ign-math|bazel-macos/ign-math6|pass|pass|
-|ign-utils|https://github.com/srmainwaring/ign-utils|bazel-macos/ign-utils1|pass|pass|
-|ign-common|https://github.com/srmainwaring/ign-common|bazel-macos/ign-common4|pass|pass|
-|ign-msgs|https://github.com/srmainwaring/ign-msgs|bazel-macos/ign-msgs9|pass|pass|
-|sdformat|https://github.com/ignitionrobotics/sdformat| bazel-sdf10|pass|pass|
-|ign-plugin|https://github.com/srmainwaring/ign-plugin|bazel-macos/ign-plugin1|pass|pass|
-|ign-transport|https://github.com/srmainwaring/ign-transport|bazel-macos/ign-transport12|pass|1 fail|
-|ign-physics|https://github.com/srmainwaring/ign-physics|bazel-macos/ign-physics5|pass|pass|
-|ign-tools|https://github.com/srmainwaring/ign-tools|bazel-macos/ign-tools1|partial|-|
-|ign-rendering|https://github.com/ignitionrobotics/ign-rendering|bazel-rendering4|fail|fail|
-|ign-gui|https://github.com/ignitionrobotics/ign-gui|bazel-gui4|fail|fail|
-|ign-sensors|https://github.com/ignitionrobotics/ign-sensors|bazel-sensors4|fail|fail|
-|ign-gazebo|https://github.com/ignitionrobotics/ign-gazebo|bazel-gazebo4|fail|fail|
+|gz-bazel|https://github.com/srmainwaring/ign-bazel|bazel-macos|pass|pass|
+|gz-math|https://github.com/srmainwaring/ign-math|bazel-macos/ign-math6|pass|pass|
+|gz-utils|https://github.com/srmainwaring/ign-utils|bazel-macos/ign-utils1|pass|pass|
+|gz-common|https://github.com/srmainwaring/ign-common|bazel-macos/ign-common4|pass|pass|
+|gz-msgs|https://github.com/srmainwaring/ign-msgs|bazel-macos/ign-msgs9|pass|pass|
+|sdformat|https://github.com/gazebosim/sdformat| bazel-sdf10|pass|pass|
+|gz-plugin|https://github.com/srmainwaring/ign-plugin|bazel-macos/ign-plugin1|pass|pass|
+|gz-transport|https://github.com/srmainwaring/ign-transport|bazel-macos/ign-transport12|pass|1 fail|
+|gz-physics|https://github.com/srmainwaring/ign-physics|bazel-macos/ign-physics5|pass|pass|
+|gz-tools|https://github.com/srmainwaring/ign-tools|bazel-macos/ign-tools1|partial|-|
+|gz-rendering|https://github.com/gazebosim/gz-rendering|bazel-rendering4|fail|fail|
+|gz-gui|https://github.com/gazebosim/gz-gui|bazel-gui4|fail|fail|
+|gz-sensors|https://github.com/gazebosim/gz-sensors|bazel-sensors4|fail|fail|
+|gz-gazebo|https://github.com/gazebosim/gz-gazebo|bazel-gazebo4|fail|fail|
 | | | | | |

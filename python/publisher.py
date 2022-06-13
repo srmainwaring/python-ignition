@@ -16,10 +16,10 @@
 
 import time
 
-from ignition.msgs.stringmsg_pb2 import StringMsg
+from gz.msgs.stringmsg_pb2 import StringMsg
 
-from ignition.transport import AdvertiseMessageOptions
-from ignition.transport import Node
+from gz.transport import AdvertiseMessageOptions
+from gz.transport import Node
 
 def main():
     # Create a transport node and advertise a topic

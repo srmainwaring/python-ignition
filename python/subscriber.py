@@ -17,10 +17,10 @@
 import time
 import typing
 
-from ignition.msgs.stringmsg_pb2 import StringMsg
+from gz.msgs.stringmsg_pb2 import StringMsg
 
-from ignition.transport import SubscribeOptions
-from ignition.transport import Node
+from gz.transport import SubscribeOptions
+from gz.transport import Node
 
 def cb(msg: StringMsg) -> None:
     print("Msg: [{}] from Python".format(msg.data))

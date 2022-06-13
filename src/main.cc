@@ -20,7 +20,7 @@
 
 #include <gz/msgs/time.pb.h>
 
-#include "ignition/msgs/extras.hh"
+#include "gz/msgs/extras.hh"
 
 int main(int argc, const char* argv[])
 {
@@ -28,7 +28,7 @@ int main(int argc, const char* argv[])
   // compatible with the version used to generate the headers.
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  std::cout << "Ignition MsgsExtras Example" << std::endl;
+  std::cout << "Gazebo MsgsExtras Example" << std::endl;
 
   // example: gz/msgs/time.proto
   {
